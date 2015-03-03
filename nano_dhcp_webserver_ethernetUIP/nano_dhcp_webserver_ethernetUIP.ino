@@ -29,15 +29,9 @@ void setup() {
     }
     EEPROM.write(1, '#');
   }
-  snprintf(macstr, 18, "%02x:%02x:%02x:%02x:%02x:%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  //snprintf(macstr, 18, "%02x:%02x:%02x:%02x:%02x:%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 
-  // Start up networking
-  Serial.print("DHCP (");
-  Serial.print(macstr);
-  Serial.print(")...");
-  Ethernet.begin(mac);
-  Serial.print("success: ");
-  Serial.println(Ethernet.localIP());
+
   
   
   
@@ -78,12 +72,12 @@ void loop() {
     boolean currentLineIsBlank = true;
     while (client.connected()) {
       if (client.available()) {
-        //char c = client.read();
-        //Serial.write(c);
+        char c = client.read();
+        Serial.write(c);
         // if you've gotten to the end of the line (received a newline
         // character) and the line is blank, the http request has ended,
         // so you can send a reply
-        //if (c == '\n' && currentLineIsBlank) {
+        if (c == '\n' && currentLineIsBlank) {
           // send a standard http response header
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
@@ -92,18 +86,26 @@ void loop() {
           client.println();
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
-          client.println("hello world !");
+          // output the value of each analog input pin
+          for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
+            int sensorReading = analogRead(analogChannel);
+            client.print("analog input ");
+            client.print(analogChannel);
+            client.print(" is ");
+            client.print(sensorReading);
+            client.println("<br />");
+          }
           client.println("</html>");
-          //break;
-        //}
-        //if (c == '\n') {
+          break;
+        }
+        if (c == '\n') {
           // you're starting a new line
-          //currentLineIsBlank = true;
-        //}
-        //else if (c != '\r') {
+          currentLineIsBlank = true;
+        }
+        else if (c != '\r') {
           // you've gotten a character on the current line
-          //currentLineIsBlank = false;
-        //}
+          currentLineIsBlank = false;
+        }
       }
     }
     // give the web browser time to receive the data
@@ -113,4 +115,3 @@ void loop() {
     Serial.println("client disconnected");
   }
 }
-
