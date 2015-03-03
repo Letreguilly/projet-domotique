@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>howto atmega1284P</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <article id="post-514" class="post-514 post type-post status-publish format-standard has-post-thumbnail hentry category-arduino category-avr-mcu category-tutorials single-view">
+            <header class="entry-header cf">
+                <h1 class="entry-title"><a href="http://openhardware.ro/using-atmega1284-arduino-ide/">Using ATmega1284 with Arduino IDE</a></h1>
+            </header>
+
+            <div class="entry-byline cf">
+
+
+            </div>
+
+            <div class="entry-content cf">
+
+
+                <!-- Chitika - WordPress Plugin 2.1.2--><div class="chitika-adspace above">
+                    <script type="text/javascript">
+                        (function () {
+                            if (window.CHITIKA === undefined) {
+                                window.CHITIKA = {'units': []};
+                            }
+                            ;
+                            var unit = {
+                                'publisher': 'silvius777',
+                                'width': 500,
+                                'height': 250,
+                                'sid': "wordpress-plugin above",
+                                'color_site_link': '0000CC',
+                                'color_title': '0000CC',
+                                'color_text': '000000',
+                                'color_bg': 'FFFFFF',
+                                'font_title': '',
+                                'font_text': '',
+                                'impsrc': 'wordpress',
+                                'calltype': 'async[2]'
+                            };
+                            var placement_id = window.CHITIKA.units.length;
+                            window.CHITIKA.units.push(unit);
+                            var x = "<di" + "v id='chitikaAdBlock-" + placement_id + "'></di" + "v>";
+                            document.write(x);
+                        }());
+                    </script><div id="chitikaAdBlock-0"></div>
+                    <script type="text/javascript" src="//cdn.chitika.net/getads.js" async=""></script>
+                </div>
+                <p><img class="aligncenter size-full wp-image-542" src="http://openhardware.ro/wp-content/uploads/ATmega1284_Arduino_Pinout.jpg" alt="ATmega1284_Arduino_Pinout" height="655" width="900"></p>
+                <p>A little while ago when working at a project on the reading of several rotary encoders, I felt the need to move from ATmega32 to an ATmega which have 40 pins but also to have new interrupts PCINT.</p>
+                <p>After a quick check with local stores sites I decided to move to the new <strong>ATmega1284</strong> microcontroller (16k SRAM, 128k Flash, 2 UART, 32 IO Pins, 8 Analog Inputs and 20 MHZ maximum frequency).<span id="result_box" class="short_text" lang="en"><span class="hps">I have not</span> <span class="hps alt-edited">studied</span> <span class="hps">in detail</span><span class=""> <span class="hps">and I</span> <span class="hps alt-edited">assumed</span> (<span class="hps">wrong)</span> <span class="hps">it is</span> <span class="hps">the same as<strong> ATmega1284P</strong></span></span></span>.</p>
+                <p><span id="result_box" class="" lang="en"><span class="hps">Soon</span> <span class="hps">I was</span> <span class="hps">to discover that</span> <span class="hps">although</span> <span class="hps">there are plenty of</span> <span class="hps">resources to</span> <span class="hps">use</span> <span class="hps">ATmega1284P</span> <span class="hps">in</span> <span class="hps">Arduino</span>, f<span id="result_box" class="short_text" lang="en"><span class="hps">or</span> <span class="hps">ATmega1284</span> <span class="hps">(without</span> <span class="hps">P)</span> <span class="hps">situation</span> <span class="hps">was different.</span></span></span></p>
+                <p><span id="result_box" class="" lang="en"><span class="hps">In</span> <span class="hps">arduino</span> <span class="hps">1.5.2</span> <span class="hps atn">(</span>the version <span class="hps">I had</span> <span class="hps">installed</span> <span class="hps">at the time)</span></span> <span class="short_text" lang="en"><span class="hps">I did not find</span> <span class="hps">header file<strong> iom1284.h</strong> in […<strong>\arduino-1.5.8\hardware\tools\avr\avr\include\avr], </strong>instead I found<strong> iom1284p.h. </strong></span></span></p>
+                <p><span id="result_box" class="" lang="en"><span class="hps alt-edited">Before I</span> <span class="hps">try to</span> <span class="hps">manually</span> <span class="hps">add</span> <span class="hps">the file</span>, I downloaded <span class="hps">the latest version of</span> <span class="hps">Arduino</span> <span class="hps">namely</span> <span class="hps">1.5.8</span> <span class="hps">and I was</span> <span class="hps">pleasantly surprised to see</span> <span class="hps">that the file</span> <strong><span class="hps">iom1284.h</span></strong> <span class="hps">was</span> <span class="hps">in place (along with<strong> iom1284p.h</strong> of course). </span></span>Good sign.</p>
+                <p>I make a folder: [<strong>…\arduino-1.5.8\hardware\arduino\avr\variants\<span style="color: #ff0000;">ATmega1284</span></strong>] <span id="result_box" class="short_text" lang="en"></span>and put<span style="color: #000000;"> file <a href="http://openhardware.ro/wp-content/uploads/pins_arduino1284.zip">pins_arduino.h</a>&nbsp; i</span>n place.</p>
+                <p>I added following information to file [<strong>…\arduino-1.5.8\hardware\arduino\avr\<span style="color: #ff0000;">boards.txt</span></strong>]</p><!-- Crayon Syntax Highlighter v2.6.9 -->
+
+                <div id="crayon-54f598621883f256566922" class="crayon-syntax crayon-theme-classic crayon-font-courier-new crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+
+                    <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;">##############################################################
+
+ATmega1284P-20.name=ATmega1284P-External 20Mhz
+ATmega1284P-20.upload.tool=avrdude
+ATmega1284P-20.build.mcu=atmega1284P
+ATmega1284P-20.build.f_cpu=20000000L
+ATmega1284P-20.build.core=arduino:arduino
+ATmega1284P-20.build.variant=ATmega1284P
+ATmega1284P-20.upload.maximum_size=128000
+
+##############################################################
+
+ATmega1284P-16.name=ATmega1284P-External 16Mhz
+ATmega1284P-16.upload.tool=avrdude
+ATmega1284P-16.build.mcu=atmega1284P
+ATmega1284P-16.build.f_cpu=16000000L
+ATmega1284P-16.build.core=arduino:arduino
+ATmega1284P-16.build.variant=ATmega1284P
+ATmega1284P-16.upload.maximum_size=128000
+
+##############################################################</textarea></div>
+                    <div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+                        <table style="" class="crayon-table">
+                            <tbody><tr class="crayon-row">
+                                    <td class="crayon-nums " data-settings="show">
+                                        <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-54f598621883f256566922-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-2">2</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-4">4</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-6">6</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-8">8</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-10">10</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-12">12</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-14">14</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-16">16</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-18">18</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-54f598621883f256566922-20">20</div><div class="crayon-num" data-line="crayon-54f598621883f256566922-21">21</div></div>
+                                    </td>
+                                    <td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-54f598621883f256566922-1"><span class="crayon-p">##############################################################</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-2">&nbsp;</div><div class="crayon-line" id="crayon-54f598621883f256566922-3"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.name</span><span class="crayon-o">=</span><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-i">External</span><span class="crayon-h"> </span><span class="crayon-cn">20Mhz</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-4"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.upload.tool</span><span class="crayon-o">=</span><span class="crayon-e">avrdude</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-5"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.build.mcu</span><span class="crayon-o">=</span><span class="crayon-e">atmega1284</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-6"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.build.f_cpu</span><span class="crayon-o">=</span><span class="crayon-cn">20000000L</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-7"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.build.core</span><span class="crayon-o">=</span><span class="crayon-v">arduino</span><span class="crayon-o">:</span><span class="crayon-e">arduino</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-8"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.build.variant</span><span class="crayon-o">=</span><span class="crayon-e">ATmega1284</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-9"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">20.upload.maximum_size</span><span class="crayon-o">=</span><span class="crayon-cn">128000</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-10">&nbsp;</div><div class="crayon-line" id="crayon-54f598621883f256566922-11"><span class="crayon-p">##############################################################</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-12">&nbsp;</div><div class="crayon-line" id="crayon-54f598621883f256566922-13"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.name</span><span class="crayon-o">=</span><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-i">External</span><span class="crayon-h"> </span><span class="crayon-cn">16Mhz</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-14"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.upload.tool</span><span class="crayon-o">=</span><span class="crayon-e">avrdude</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-15"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.build.mcu</span><span class="crayon-o">=</span><span class="crayon-e">atmega1284</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-16"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.build.f_cpu</span><span class="crayon-o">=</span><span class="crayon-cn">16000000L</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-17"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.build.core</span><span class="crayon-o">=</span><span class="crayon-v">arduino</span><span class="crayon-o">:</span><span class="crayon-e">arduino</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-18"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.build.variant</span><span class="crayon-o">=</span><span class="crayon-e">ATmega1284</span></div><div class="crayon-line" id="crayon-54f598621883f256566922-19"><span class="crayon-v">ATmega1284</span><span class="crayon-o">-</span><span class="crayon-cn">16.upload.maximum_size</span><span class="crayon-o">=</span><span class="crayon-cn">128000</span></div><div class="crayon-line crayon-striped-line" id="crayon-54f598621883f256566922-20">&nbsp;</div><div class="crayon-line" id="crayon-54f598621883f256566922-21"><span class="crayon-p">##############################################################</span></div></div></td>
+                                </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+                <!-- [Format Time: 0.0023 seconds] -->
+                <p>Append the content of <a href="http://openhardware.ro/wp-content/uploads/AVRDUDE_ATmega1284.zip">AVRDUDE_ATmega1284.conf</a> to file [<strong>…\arduino-1.5.8\hardware\tools\avr\etc\<span style="color: #ff0000;">avrdude.conf</span></strong>]</p>
+                <p>Please note there are no bootloader in my setup since I’m&nbsp;<span id="result_box" class="short_text" lang="en"><span class="hps">always</span></span> using USBasp to upload.</p>
+                <p><img class="aligncenter size-full wp-image-538" src="http://openhardware.ro/wp-content/uploads/ATmega1284_Arduino_Screenshot.jpg" alt="ATmega1284_Arduino_Screenshot" height="685" width="524"></p>
+                <p>&nbsp;</p>
+            </div>
+        </article>
+    </body>
+</html>

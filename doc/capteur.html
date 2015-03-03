@@ -6,25 +6,31 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>capteur</title>
+        <title>Capteur de base</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Interface</h1>
-        <p>Specification des capteurs externes au boitier</p>
+        <h1>Specification du capteurs de base :</h1>
         <ul>
-            <li>jack 3.5mm 4pins
+            <li><h2>Sonde internes</h2>
+                <p>De base un capteur intégre un thermométre, une photoresistance et un capteur d'humidité</p>
+            </li>
+            <li><h2>Connecteurs 4 pins</h2>
                 <ul>
                     <li>masse</li>
                     <li>tension positive</li>
                     <li>donnee analogique</li>
                     <li>donnee nummerique</li>
                 </ul>
+                <p>Ce connecteur sert à connecter des sondes supplémentaire au botier capteur. Une résistance doit être intégrée dans le fil des sondes externe entre le 5V et l'entrée analogique. En fonction de la valeur de la résistance le capteur sera à même de connaitre le type de sonde branché.</p>
             </li>
-            <li>ecran
-                <p>Doit afficher l'ip de la sonde ainsi que la temperature. L'IP seras afficher uniquement durant les 10 premiere secondes
-                    suivant le demarage. Par la suite seul la temperature sera affiche</p>
+            <li><h2>Ecran (optionnel)</h2>
+                <p>Doit afficher l'ip de la sonde ainsi que la temperature. L'IP sera afficher uniquement durant les 10 premiere secondes
+                    suivant le demarage. Par la suite seul les données des différents capteurs seront affichées</p>
+            </li>
+            <li><h2>Power over ethernet (poe)</h2>
+                <p>Cette options est en projet pour la seconde génération de capteur. l'implémentation du POE actif srai réalisée à partir d'un puce texa-instrument tps2375 et d'un régulateur de tension de type bulk(mini alim à dcoupage).</p>
             </li>
         </ul>
     </body>
