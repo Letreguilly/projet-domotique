@@ -1,3 +1,4 @@
+#include "ethernet.h"
 #include <EtherCard.h>
 #include <EEPROM.h>
 #include <TrueRandom.h>
@@ -29,41 +30,25 @@ U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
 
 void setup() {
 
-	u8g.setFont(u8g_font_unifontr);
-	Draw("255.255.255.255", " 13C 23%");
+	InitScreen();
 	Serial.begin(9600);
-	if (EEPROM.read(1) == '#')
-	{
-		for (int i = 3; i < 6; i++)
-		{
-			mac[i] = EEPROM.read(i);
-		}
-	}
-	else
-	{
-		for (int i = 3; i < 6; i++) {
-
-			mac[i] = TrueRandom.randomByte();
-			EEPROM.write(i, mac[i]);
-		}
-		EEPROM.write(1, '#');
-	}
+	InitMacAddress();
 
 	/**	Ethernet	**/
-
+	InitMacAddress();
 	PrintMac(mac);
-	Serial.println();
-	if (ether.begin(sizeof Ethernet::buffer, mac, 10) == 0)  //10 spi slave pin
-		Serial.println( "Failed to access Ethernet controller");
-		DHCPsetup();
+	EthernetSetup();
+
+
+	
 	if (!ether.dnsLookup(website))
 		Serial.println("DNS failed");
 		ether.printIp("SRV: ", ether.hisip);
 		//ether.browseUrl(PSTR("/foo/"), "bar", website, my_callback);
 		ether.browseUrl("/foo/", "bar", website, my_callback);
 
-	/**	One Wire	**/
-	initOWBus();
+		/**	One Wire	**/
+		initOWBus();
 	CheckProbeType();
 	PrintOWAddress();
 }
@@ -75,95 +60,19 @@ void loop() {
 	{
 		ether.httpServerReply(homePage()); // send web page data
 	}
-	Readtemp();
+	//Readtemp();
 }
 /********************************************** Ethernet function *******************************************/
 
-void InitMacAddress() {
-	if (EEPROM.read(1) == '#')
-	{
-		for (int i = 3; i < 6; i++) {
 
-			mac[i] = EEPROM.read(i);
-		}
-	}
-	else {
-		for (int i = 3; i < 6; i++)
-		{
-			mac[i] = TrueRandom.randomByte();
-			EEPROM.write(i, mac[i]);
-		}		EEPROM.write(1, '#');
-	}
-}
-
-static word homePage() {
-	bfill = ether.tcpOffset();
-	/*bfill.emit_p(PSTR(
-		"HTTP/1.0 200 OK\r\n"
-		"Content-Type: text/html\r\n"
-		"Pragma: no-cache\r\n"
-		"\r\n"
-		"<meta http-equiv='refresh' content='30'/>"
-		"<title>Temp server</title>"
-		"page de test"));*/
-	bfill.emit_p(
-		"HTTP/1.0 200 OK\r\n"
-		"Content-Type: text/html\r\n"
-		"Pragma: no-cache\r\n"
-		"\r\n"
-		"<meta http-equiv='refresh' content='30'/>"
-		"<title>Temp server</title>"
-		"page de test");
-	
-	return bfill.position();
-
-}
-
-void PrintMac(byte macadd[6]) {
-	Serial.print("MAC: ");
-	for (byte i = 0; i < 6; ++i) {
-
-		Serial.print(macadd[i], HEX);
-		if (i < 5) {
-
-			Serial.print(':');
-		}
-	}
-}
-
-void DHCPsetup() {
-
-	Serial.println(F("Setting up DHCP"));
-	if (!ether.dhcpSetup()) {
-
-		//Serial.println(F("DHCP failed"));
-	}
-	//ether.printIp("My IP: ", ether.myip);
-	//ether.printIp("Netmask: ", ether.netmask);
-	//ether.printIp("GW IP: ", ether.gwip);
-	//ether.printIp("DNS IP: ", ether.dnsip);
-}
-
-void Staticsetup() {
-
-	Serial.println(F("Setting up DHCP"));
-	if (!ether.staticSetup(myDefaultIp)) {
-
-		Serial.println(F("IP Failed"));
-	}
-}
-
-
-// called when the client request is complete?static
-void my_callback(byte status, word off, word len) {
-
-	Serial.println(">>>");
-	Ethernet::buffer[off + 300] = 0;
-	Serial.print((const char*) Ethernet::buffer + off);
-	Serial.println("...");
-}
 
 /********************************************** Oled screen function *******************************************/
+void InitScreen(){
+	u8g.setFont(u8g_font_unifontr);
+	Draw("init success", "OK");
+	delay(600);
+}
+
 void Draw(String small, String big) {
 
 	// picture loop

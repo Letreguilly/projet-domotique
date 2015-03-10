@@ -47,7 +47,7 @@
       <AdditionalIncludeDirectories>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;C:\Users\Sylvain\Documents\projet-domotique\code\arduino\box;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\utility;C:\Users\Sylvain\Documents\Arduino\libraries\TrueRandom;C:\Users\Sylvain\Documents\Arduino\libraries\TrueRandom\utility;C:\Users\Sylvain\Documents\Arduino\libraries\U8glib;C:\Users\Sylvain\Documents\Arduino\libraries\U8glib\utility;C:\Users\Sylvain\Documents\Arduino\libraries\OneWire;C:\Users\Sylvain\Documents\Arduino\libraries\OneWire\utility;C:\Users\Sylvain\Documents\Arduino\libraries\ethercard-master;C:\Users\Sylvain\Documents\Arduino\libraries\ethercard-master\utility;C:\Program Files (x86)\Arduino\libraries;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers;C:\Users\Sylvain\Documents\Arduino\libraries;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\;c:\program files (x86)\arduino\hardware\tools\avr\avr\;c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\Users\Sylvain\Documents\projet-domotique\code\arduino\box\Visual Micro\.box.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
-      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;ARDUINO=160;ARDUINO_MAIN;__AVR__;__avr__;F_CPU=16000000L;__cplusplus;GCC_VERSION=40801;ARDUINO_ARCH_AVR;ARDUINO_AVR_NANO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;_VMDEBUG=1;ARDUINO=160;ARDUINO_MAIN;__AVR__;__avr__;F_CPU=16000000L;__cplusplus;GCC_VERSION=40801;ARDUINO_ARCH_AVR;ARDUINO_AVR_NANO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -56,10 +56,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;C:\Users\Sylvain\Documents\projet-domotique\code\arduino\box;C:\Program Files (x86)\Arduino\libraries\Ethernet\src;C:\Program Files (x86)\Arduino\libraries\Ethernet\src\utility;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\utility;C:\Users\Sylvain\Documents\Arduino\libraries\TrueRandom;C:\Users\Sylvain\Documents\Arduino\libraries\TrueRandom\utility;C:\Users\Sylvain\Documents\Arduino\libraries\U8glib;C:\Users\Sylvain\Documents\Arduino\libraries\U8glib\utility;C:\Users\Sylvain\Documents\Arduino\libraries\OneWire;C:\Users\Sylvain\Documents\Arduino\libraries\OneWire\utility;C:\Users\Sylvain\Documents\Arduino\libraries\ethercard-master;C:\Users\Sylvain\Documents\Arduino\libraries\ethercard-master\utility;C:\Program Files (x86)\Arduino\libraries;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers;C:\Users\Sylvain\Documents\Arduino\libraries;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\;c:\program files (x86)\arduino\hardware\tools\avr\avr\;c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\Users\Sylvain\Documents\projet-domotique\code\arduino\box\Visual Micro\.box.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;ARDUINO=160;ARDUINO_MAIN;__AVR__;__avr__;F_CPU=16000000L;__cplusplus;GCC_VERSION=40801;ARDUINO_ARCH_AVR;ARDUINO_AVR_NANO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -71,9 +76,188 @@
     <None Include="box.ino">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="ethernet.ino" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Arduino.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\binary.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Client.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial_private.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\IPAddress.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\new.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Print.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Printable.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Server.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Stream.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Udp.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBAPI.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBCore.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBDesc.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WCharacter.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_private.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WString.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\EEPROM.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs\pins_arduino.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\ethercard-master\enc28j60.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\ethercard-master\EtherCard.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\ethercard-master\net.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\OneWire\OneWire.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\TrueRandom\TrueRandom.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\U8glib\U8glib.h" />
+    <ClInclude Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g.h" />
+    <ClInclude Include="ethernet.h" />
     <ClInclude Include="Visual Micro\.box.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\abi.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\CDC.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial0.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial1.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial2.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial3.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HID.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\hooks.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\IPAddress.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\main.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\new.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Print.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Stream.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Tone.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBCore.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WInterrupts.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_analog.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_digital.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_pulse.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_shift.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WMath.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WString.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\EEPROM.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\dhcp.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\dns.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\enc28j60.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\EtherCard.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\tcpip.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\udpserver.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\ethercard-master\webutil.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\OneWire\OneWire.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\TrueRandom\TrueRandom.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\U8glib.cpp" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\chessengine.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_bitmap.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_circle.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_clip.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_api.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_api_16gr.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_attiny85_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_common.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_fast_parallel.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_hw_usart_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_no_en_parallel.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_parallel.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_port_d_wr.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_ssd_i2c.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_st7920_custom.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_st7920_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_st7920_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_std_sw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_sw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_t6963.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_arduino_uc_i2c.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_atmega_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_atmega_parallel.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_atmega_st7920_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_atmega_st7920_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_atmega_sw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_i2c.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_io.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_null.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_raspberrypi_hw_spi.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_com_raspberrypi_ssd_i2c.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_cursor.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_delay.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_a2_micro_printer.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_flipdisc_2x7.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_gprof.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ht1632.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ili9325d_320x240.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ks0108_128x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_lc7981_160x80.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_lc7981_240x128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_lc7981_240x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_lc7981_320x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ld7032_60x32.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_null.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_pcd8544_84x48.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_pcf8812_96x65.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_sbn1661_122x32.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1306_128x32.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1306_128x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1309_128x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1322_nhd31oled_bw.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1322_nhd31oled_gr.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1325_nhd27oled_bw.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1325_nhd27oled_bw_new.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1325_nhd27oled_gr.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1325_nhd27oled_gr_new.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1327_96x96_gr.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_ssd1351_128x128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_64128n.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_dogm128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_dogm132.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_lm6059.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_lm6063.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_nhd_c12832.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7565_nhd_c12864.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7687_c144mvgd.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7920_128x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7920_192x32.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_st7920_202x32.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_t6963_128x128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_t6963_128x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_t6963_240x128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_t6963_240x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_tls8204_84x48.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1601_c128032.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1608_240x128.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1608_240x64.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1610_dogxl160.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1611_dogm240.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1611_dogxl240.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1701_dogs102.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_dev_uc1701_mini12864.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_ellipse.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_font.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_font_data.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_line.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_ll_api.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_page.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb14v1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb16h1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb16h2.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb16v1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb16v2.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb32h1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8h1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8h1f.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8h2.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8h8.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8v1.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pb8v2.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pbxh16.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_pbxh24.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_polygon.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_rect.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_rot.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_scale.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_state.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_u16toa.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_u8toa.c" />
+    <ClCompile Include="..\..\..\..\Arduino\libraries\U8glib\utility\u8g_virtual_screen.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
