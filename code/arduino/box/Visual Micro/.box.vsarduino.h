@@ -80,5 +80,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <box.ino>
-#include <ethernet.ino>
+#include <One_Wire.ino>
+#include <SSD1306.ino>
+#include <eternet_enc28j60.ino>
 #endif

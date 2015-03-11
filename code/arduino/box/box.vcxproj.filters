@@ -40,13 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="box.ino" />
-    <None Include="ethernet.ino" />
+    <None Include="eternet_enc28j60.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visual Micro\.box.vsarduino.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="ethernet.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Arduino.h">

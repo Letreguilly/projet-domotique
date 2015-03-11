@@ -1,3 +1,8 @@
+const char serveur[] = "www.google.com";
+byte mac[6] = { 8, 21, 177, 0, 0, 0 };
+byte Ethernet::buffer[500];
+BufferFiller bfill;
+static byte myDefaultIp[] = { 10, 0, 0, 1 };
 
 void InitMacAddress() {
 	if (EEPROM.read(1) == '#')
@@ -14,6 +19,18 @@ void InitMacAddress() {
 			EEPROM.write(i, mac[i]);
 		}		EEPROM.write(1, '#');
 	}
+
+	PrintMac();
+	String m1 = String(mac[0], HEX);
+	String m2 = String(mac[1], HEX);
+	String m3 = String(mac[2], HEX);
+	String m4 = String(mac[3], HEX);
+	String m5 = String(mac[4], HEX);
+	String m6 = String(mac[5], HEX);
+	String m = String(":");
+
+	Draw(m1 + m + m2 + m + m3 + m + m4 + m + m5 + m + m6, "mac addr");
+	delay(5000);
 }
 
 static word homePage() {
@@ -30,18 +47,6 @@ static word homePage() {
 
 	return bfill.position();
 
-}
-
-void PrintMac(byte macadd[6]) {
-	Serial.print("MAC: ");
-	for (byte i = 0; i < 6; ++i) {
-
-		Serial.print(macadd[i], HEX);
-		if (i < 5) {
-
-			Serial.print(':');
-		}
-	}
 }
 
 void EthernetSetup(){
@@ -65,6 +70,23 @@ void Staticsetup() {
 	}
 }
 
+
+
+
+/******************************* Debug function *******************************/
+
+void PrintMac() {
+	Serial.print("MAC: ");
+	for (byte i = 0; i < 6; ++i) {
+
+		Serial.print(mac[i], HEX);
+		if (i < 5) {
+
+			Serial.print(':');
+		}
+	}
+}
+
 void TestEthernet(){
 	ether.printIp("My IP: ", ether.myip);
 	ether.printIp("Netmask: ", ether.netmask);
@@ -76,8 +98,16 @@ void TestEthernet(){
 // called when the client request is complete?static
 void my_callback(byte status, word off, word len) {
 
-	Serial.println(">>>");
-	Ethernet::buffer[off + 300] = 0;
-	Serial.print((const char*)Ethernet::buffer + off);
-	Serial.println("...");
+	//Serial.println(">>>");
+	//Ethernet::buffer[off + 300] = 0;
+	//Serial.print((const char*)Ethernet::buffer + off);
+	//Serial.println("...");
+}
+
+void Get(){
+	if (!ether.dnsLookup(serveur)){
+		ether.printIp("SRV: ", ether.hisip);
+		//ether.browseUrl(PSTR("/foo/"), "bar", website, my_callback);
+		ether.browseUrl("/foo/", "bar", serveur, my_callback);
+	}
 }
