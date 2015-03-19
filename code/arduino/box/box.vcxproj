@@ -79,6 +79,12 @@
     <None Include="eternet_enc28j60.ino">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="One_Wire.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="SSD1306.ino">
+      <FileType>CppCode</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Arduino.h" />
@@ -265,7 +271,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties arduino.upload.port="COM5" />
+      <UserProperties arduino.upload.port="COM8" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

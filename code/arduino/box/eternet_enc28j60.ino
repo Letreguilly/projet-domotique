@@ -1,7 +1,6 @@
 const char serveur[] = "www.google.com";
 byte mac[6] = { 8, 21, 177, 0, 0, 0 };
 byte Ethernet::buffer[500];
-BufferFiller bfill;
 static byte myDefaultIp[] = { 10, 0, 0, 1 };
 
 void InitMacAddress() {
@@ -20,7 +19,6 @@ void InitMacAddress() {
 		}		EEPROM.write(1, '#');
 	}
 
-	PrintMac();
 	String m1 = String(mac[0], HEX);
 	String m2 = String(mac[1], HEX);
 	String m3 = String(mac[2], HEX);
@@ -29,11 +27,17 @@ void InitMacAddress() {
 	String m6 = String(mac[5], HEX);
 	String m = String(":");
 
-	Draw(m1 + m + m2 + m + m3 + m + m4 + m + m5 + m + m6, "mac addr");
+	message = m1 + m + m2 + m + m3 + m + m4 + m + m5 + m + m6;
+	big = "mac addr";
+	Draw();
 	delay(5000);
 }
 
 static word homePage() {
+	char charVal[10];
+	dtostrf(celsius, 4, 1, charVal);
+
+	BufferFiller bfill;
 	bfill = ether.tcpOffset();
 	bfill.emit_p(PSTR(
 		"HTTP/1.0 200 OK\r\n"
@@ -42,7 +46,8 @@ static word homePage() {
 		"\r\n"
 		"<meta http-equiv='refresh' content='30'/>"
 		"<title>Temp server</title>"
-		"page de test"));
+		"temperature : $S"
+		), charVal);
 
 
 	return bfill.position();
@@ -50,23 +55,43 @@ static word homePage() {
 }
 
 void EthernetSetup(){
-	if (ether.begin(sizeof Ethernet::buffer, mac, 10) == 0)
-		Draw("Ethernet failed", "eth fail");
+	if (ether.begin(sizeof Ethernet::buffer, mac, 10) == 0){
+		message = "access eth";
+		big = "failed";
+		Draw();
+		delay(5000);
+	}
+		
 	DHCPsetup();
 }
 
 void DHCPsetup() {
 
-	Serial.println(F("Setting up DHCP"));
+	//Serial.println(F("Setting up DHCP"));
 	if (!ether.dhcpSetup()) {
-		Draw("dhcp failed", "warning");
+		message = "dhcp fail";
+		big = " static ";
+		Draw();
+		delay(20000);
 	}
+	String o1 = String(ether.myip[0]);
+	String o2 = String(ether.myip[1]);
+	String o3 = String(ether.myip[2]);
+	String o4 = String(ether.myip[3]);
+	String p = ".";
+	message = "  " + o1 + p + o2 + p + o3 + p + o4;
+	big = "   IP   ";
+	Draw();
+	delay(5000);
 }
 
 void Staticsetup() {
 
 	if (!ether.staticSetup(myDefaultIp)) {
-		Draw("Ethernet failed", "eth fail");
+		message = "  static eth";
+		big = " failed";
+		Draw();
+		delay(5000);
 	}
 }
 

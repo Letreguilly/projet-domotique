@@ -1,6 +1,6 @@
-OneWire  ds(2);  // on pin 10 (a 4.7K resistor is necessary)
+OneWire  ds(4);  // on pin 10 (a 4.7K resistor is necessary)
 byte addr[8];
-byte data[12];
+
 float celsius;
 
 
@@ -16,21 +16,13 @@ void initOWBus() {
 	}
 }
 
-
-/******************************* Debug function *******************************/
-
-
-void Readtemp() {
-	byte present = 0;
+//you can only wall this function one time per second, even temperature will fail
+void Readtemp2() {
 	byte i;
 	int16_t raw;
+	byte data[12];
 
 	ds.reset();
-	ds.select(addr);
-	ds.write(0x44, 1);	// start conversion, with parasite power on at the end
-
-	delay(1000);		//wait for conversion
-	present = ds.reset();
 	ds.select(addr);
 	ds.write(0xBE);		//result
 
@@ -42,9 +34,21 @@ void Readtemp() {
 
 
 	celsius = (float)raw / 16.0;
-	String sss = String(celsius);
-	Draw("temperature :", sss + "C");
+	message = "  temperature";
+	big = " " + String(celsius) + "C";
+	Draw();
+
+	
+
+	ds.reset();
+	ds.select(addr);
+	ds.write(0x44, 1);	// start conversion, with parasite power on at the end
+
+	
 }
+
+/******************************* Debug function *******************************/
+
 
 byte CheckProbeType() {
 
@@ -75,4 +79,32 @@ void OWdataPrinter(byte data[12]) {
 		Serial.print(data[i], HEX);
 		Serial.print(" ");
 	}
+}
+
+void Readtemp() {
+	byte present = 0;
+	byte i;
+	int16_t raw;
+	byte data[12];
+
+	ds.reset();
+	ds.select(addr);
+	ds.write(0x44, 1);	// start conversion, with parasite power on at the end
+
+	delay(1000);		//wait for conversion
+	present = ds.reset();
+	ds.select(addr);
+	ds.write(0xBE);		//result
+
+	//read
+	for (i = 0; i < 9; i++) {
+		data[i] = ds.read();
+		raw = (data[1] << 8) | data[0]; 	byte cfg = (data[4] & 0x60);
+	}
+
+
+	celsius = (float)raw / 16.0;
+	message = "  temperature";
+	big = " " + String(celsius) + "C";
+	Draw();
 }
