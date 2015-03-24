@@ -1,11 +1,10 @@
-OneWire  ds(4);  // on pin 10 (a 4.7K resistor is necessary)
-byte addr[8];
+
 
 float celsius;
 
 
 
-void initOWBus() {
+void InitOWBus() {
 
 	ds.search(addr);
 	ds.reset_search();
@@ -17,7 +16,7 @@ void initOWBus() {
 }
 
 //you can only wall this function one time per second, even temperature will fail
-void Readtemp2() {
+void ReadtempAsync() {
 	byte i;
 	int16_t raw;
 	byte data[12];
@@ -36,8 +35,6 @@ void Readtemp2() {
 	celsius = (float)raw / 16.0;
 	message = "  temperature";
 	big = " " + String(celsius) + "C";
-	Draw();
-
 	
 
 	ds.reset();
@@ -81,7 +78,7 @@ void OWdataPrinter(byte data[12]) {
 	}
 }
 
-void Readtemp() {
+void ReadtempSync() {
 	byte present = 0;
 	byte i;
 	int16_t raw;
@@ -106,5 +103,4 @@ void Readtemp() {
 	celsius = (float)raw / 16.0;
 	message = "  temperature";
 	big = " " + String(celsius) + "C";
-	Draw();
 }

@@ -1,9 +1,9 @@
-U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
+
 
 
 void InitScreen(){
 	u8g.setFont(u8g_font_unifontr);
-	delay(600);
+	delay(100);
 }
 
 void Draw() {
