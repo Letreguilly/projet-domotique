@@ -1,27 +1,3 @@
-
-
-
-static word homePage() {
-  char charVal[10];
-  dtostrf(celsius, 4, 1, charVal);
-
-  BufferFiller bfill;
-  bfill = ether.tcpOffset();
-  bfill.emit_p(PSTR(
-                 "HTTP/1.0 200 OK\r\n"
-                 "Content-Type: text/html\r\n"
-                 "Pragma: no-cache\r\n"
-                 "\r\n"
-                 "<meta http-equiv='refresh' content='30'/>"
-                 "<title>Temp server</title>"
-                 "temperature : $S"
-               ), charVal);
-
-
-  return bfill.position();
-
-}
-
 void InitEthernet() {
   if (ether.begin(sizeof Ethernet::buffer, mac, 10) == 0) {
     message = "access eth";
@@ -57,13 +33,59 @@ void IPtoScreen(uint8_t ip[4], String info) {
   big = info;
 }
 
+static word notfound() {
+  BufferFiller bfill;
+  bfill = ether.tcpOffset();
+  bfill.emit_p(PSTR(
+                 "HTTP/1.0 404 Not Found\r\n"
+                 "Content-Type: text/html\r\n"
+                 "Pragma: no-cache\r\n"
+                 "\r\n"
+                 "<title>404</title>"
+                 "<h1>Not Found <br>Error 404</H1>"
+               ));
+  return bfill.position();
+}
 
+static word temperature() {
+  char charVal[10];
+  dtostrf(celsius, 4, 1, charVal);
 
+  BufferFiller bfill;
+  bfill = ether.tcpOffset();
+  bfill.emit_p(PSTR(
+                 "HTTP/1.0 20 OK\r\n"
+                 "Content-Type: text/html\r\n"
+                 "Pragma: no-cache\r\n"
+                 "\r\n"
+                 "<title>Temp server</title>"
+                 "temperature : $S"
+               ), charVal);
+  return bfill.position();
+}
 
+static word settings() {
+  BufferFiller bfill;
+  bfill = ether.tcpOffset();
+  bfill.emit_p(PSTR(
+                 "HTTP/1.0 200 OK\r\n"
+                 "Content-Type: text/html\r\n"
+                 "Pragma: no-cache\r\n"
+                 "\r\n"
+                 "<title>Temp Server settings</title>"
+                 "<form action=\"toto.html\">"
+                 "First name : <br>"
+                 "<input type=\"text\" name=\"firstname\">"
+                 "<br>"
+                 "Last name : <br>"
+                 "<input type=\"text\" name=\"Lastname\">"
+                 "<br><br>"
+                 "<input type=\"submit\" value=\"submit\">"
+                 "</form>"
 
-
-  
-
+               ));
+  return bfill.position();
+}
 
 
 /******************************* Debug function *******************************/
