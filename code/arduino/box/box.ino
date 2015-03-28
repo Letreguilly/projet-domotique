@@ -3,89 +3,165 @@
 #include <TrueRandom.h>
 #include <U8glib.h>
 #include <OneWire.h>
-#include <stdio.h>
 #include <string.h>
 
-U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
-String message;
-String big;
-
-
-OneWire  ds(4);  // on pin 10 (a 4.7K resistor is necessary)
-byte addr[8];
 
 
 
-const char serveur[] = "www.google.com";
-byte mac[6] = { 8, 21, 177, 0, 0, 0 };
-byte Ethernet::buffer[750];
-static byte myDefaultIp[] = { 10, 0, 0, 1 };
+  
 
+
+
+
+
+
+
+
+
+
+
+
+
+class Screen
+{
+public:
+	Screen();
+	String message;
+	String big;
+	void InitScreen();
+	void Draw();
+private:
+	U8GLIB_SSD1306_128X64 u8g;
+	uint8_t ip[4];
+};
+
+class Ethernet_enc28j60
+{
+public:
+	Ethernet_enc28j60();
+	boolean InitEthernet(byte mymac[6]);
+	boolean DHCPsetup();
+	boolean Staticsetup();
+	String GetIp();
+	void pageNotfound();
+	void pageTemperature();
+	void pageSettings();
+	String receiveData();
+	void TestEthernet();
+private:
+	byte myDefaultIp[4] = { 10, 0, 0, 1 };
+	
+};
+
+
+class MacAddr
+{
+public:
+	MacAddr();
+	String MactoString();
+	byte * value();
+private:
+	byte mac[6] = { 8, 21, 177, 0, 0, 0 };
+};
+
+
+Screen * screen;
+Ethernet_enc28j60 * ethernet;
+MacAddr * mac;
 
 void setup() {
-  Serial.begin(9600);
-  big = "start";
-
-  InitScreen();
-  InitOWBus();
-  InitMacAddress();
-  InitEthernet();
-
-  if (big != "start") {
-    Draw();
-    delay(5000);
-  }
-
-  MactoScreen(ether.mymac, "  MyMac ");
-  Draw();
-  delay(0);
-
-  IPtoScreen(ether.myip, "  MyIP  ");
-  Draw();
-  delay(0);
-
 }
 
 
 void loop() {	//loop forever
 
-  word size, pos;
+
+	/* Serial */
+	Serial.begin(9600);
+
+	/* Screen */
+	screen = new Screen();
+	screen->big = "start";
+	screen->InitScreen();
+
+	/* OneWire */
+	InitOWBus();
+
+	/* Mac */
+	mac = new MacAddr();
+	screen->message = mac->MactoString();
+	screen->big = "  MyMac";
+	screen->Draw();
+	delay(3000);
+
+	/* Ethernet */
+	//byte macad[6] = mac->value
+	ethernet = new Ethernet_enc28j60();
+	if (ethernet->InitEthernet(mac->value()) == false) {
+		screen->message = "access eth";
+		screen->big = "failed";
+		screen->Draw();
+		delay(5000);
+	}
+	else if (ethernet->DHCPsetup() == false){
+		screen->message = "dhcp fail";
+		screen->big = " static ";
+		screen->Draw();
+		delay(5000);
+		if (ethernet->Staticsetup() == false){
+			screen->message = "  static eth";
+			screen->big = " failed";
+			screen->Draw();
+			delay(5000);
+		}
+	}
+
+	screen->message = " " + ethernet->GetIp();
+	screen->big = "  MyIp";
+	screen->Draw();
+	delay(3000);
 
 
-  int i ;
+	for (;;) {
 
-  for (;;) {
-    String request;
-    
-    size = ether.packetReceive();
-    pos = ether.packetLoop(size);
-    if (pos != 0 )  // check if valid tcp data is received
-    {
+		String request = ethernet->receiveData();
+		
+		if (request.length() >= 1){
+			pageChooser(request);
+		}
+		ReadtempAsync();
+		screen->Draw();
+	}
+}
 
-      for (i = pos ; i < size + pos ; i ++) {
-        Serial.print((char)Ethernet::buffer[i]);
-      }
+/**********************Other function**************************/
 
-      i = 0;
-      //copy http header line 1 to request
-      while ((char)Ethernet::buffer[pos + 4 + i] != ' ' && i < 50) {
-        request.concat((char)Ethernet::buffer[pos + 4 + i]);
-        ++i;
-      }
+void pageChooser(String request){
+	//page chooser
+	if (request.indexOf("temperature") == 1) {
+		ethernet->pageTemperature();
+	}
+	else if (request.indexOf("settings") == 1) {
+		ethernet->pageSettings();
+	}
+	else {
+		ethernet->pageNotfound();
+	}
+}
 
-      //page chooser
-      Serial.println(request);
-      if (request.startsWith("/temperature.html")) {
-        ether.httpServerReply(temperature());
-      } else if (request.startsWith("/settings.html")) {
-        ether.httpServerReply(settings());
-        
-      } else {
-        ether.httpServerReply(notfound());
-      }
-      
-    }
-    ReadtempAsync();
-    Draw();
-  }
+String getUrlParameter(String url, String parameter){
+
+	int  pos = url.indexOf(parameter) + parameter.length() + 1;
+	Serial.println(pos);
+	String value;
+	unsigned int i = 0;
+
+	while (url.charAt(pos) != '?' && url.charAt(pos) != '&' && i < 10){
+		value.concat(url.charAt(pos));
+		pos++;
+		i++;
+	}
+
+
+	return value;
 }

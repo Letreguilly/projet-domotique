@@ -1,117 +1,137 @@
-void InitEthernet() {
-  if (ether.begin(sizeof Ethernet::buffer, mac, 10) == 0) {
-    message = "access eth";
-    big = "failed";
-    return;
-  }
-  DHCPsetup();
+byte Ethernet::buffer[700];
+
+Ethernet_enc28j60::Ethernet_enc28j60(){
+
 }
 
-void DHCPsetup() {
-  if (!ether.dhcpSetup()) {
-    message = "dhcp fail";
-    big = " static ";
-    Staticsetup();
-  }
+
+
+boolean Ethernet_enc28j60::InitEthernet(byte mymac[6]) {
+	if (ether.begin(700, mymac, 10) == 0) {
+		return false;
+	}
+	return true;
 }
 
-void Staticsetup() {
-
-  if (!ether.staticSetup(myDefaultIp)) {
-    message = "  static eth";
-    big = " failed";
-  }
+boolean Ethernet_enc28j60::DHCPsetup() {
+	if (!ether.dhcpSetup()) {		
+		return false;
+	}
+	ether.myip;
+	return true;
 }
 
-void IPtoScreen(uint8_t ip[4], String info) {
-  String o1 = String(ip[0]);
-  String o2 = String(ip[1]);
-  String o3 = String(ip[2]);
-  String o4 = String(ip[3]);
-  String p = ".";
-  message = "  " + o1 + p + o2 + p + o3 + p + o4;
-  big = info;
+boolean Ethernet_enc28j60::Staticsetup() {
+
+	if (!ether.staticSetup(myDefaultIp)) {
+		return false;
+	}
+	return true;
 }
 
-static word notfound() {
-  BufferFiller bfill;
-  bfill = ether.tcpOffset();
-  bfill.emit_p(PSTR(
-                 "HTTP/1.0 404 Not Found\r\n"
-                 "Content-Type: text/html\r\n"
-                 "Pragma: no-cache\r\n"
-                 "\r\n"
-                 "<title>404</title>"
-                 "<h1>Not Found <br>Error 404</H1>"
-               ));
-  return bfill.position();
+String Ethernet_enc28j60::GetIp() {
+
+	String o1 = String(ether.myip[0]);
+	String o2 = String(ether.myip[1]);
+	String o3 = String(ether.myip[2]);
+	String o4 = String(ether.myip[3]);
+	String p = ".";
+	return o1 + p + o2 + p + o3 + p + o4;
 }
 
-static word temperature() {
-  char charVal[10];
-  dtostrf(celsius, 4, 1, charVal);
-
-  BufferFiller bfill;
-  bfill = ether.tcpOffset();
-  bfill.emit_p(PSTR(
-                 "HTTP/1.0 20 OK\r\n"
-                 "Content-Type: text/html\r\n"
-                 "Pragma: no-cache\r\n"
-                 "\r\n"
-                 "<title>Temp server</title>"
-                 "temperature : $S"
-               ), charVal);
-  return bfill.position();
+void Ethernet_enc28j60::pageNotfound() {
+	BufferFiller bfill;
+	bfill = ether.tcpOffset();
+	bfill.emit_p(PSTR(
+		"HTTP/1.0 404 Not Found\r\n"
+		"Content-Type: text/html\r\n"
+		"Pragma: no-cache\r\n"
+		"\r\n"
+		"<title>404</title>"
+		"<h1>Not Found <br>Error 404</H1>"
+		));
+	ether.httpServerReply(bfill.position());
 }
 
-static word settings() {
-  BufferFiller bfill;
-  bfill = ether.tcpOffset();
-  bfill.emit_p(PSTR(
-                 "HTTP/1.0 200 OK\r\n"
-                 "Content-Type: text/html\r\n"
-                 "Pragma: no-cache\r\n"
-                 "\r\n"
-                 "<title>Temp Server settings</title>"
-                 "<form action=\"toto.html\">"
-                 "First name : <br>"
-                 "<input type=\"text\" name=\"firstname\">"
-                 "<br>"
-                 "Last name : <br>"
-                 "<input type=\"text\" name=\"Lastname\">"
-                 "<br><br>"
-                 "<input type=\"submit\" value=\"submit\">"
-                 "</form>"
+void Ethernet_enc28j60::pageTemperature() {
+	char charVal[10];
+	dtostrf(celsius, 4, 1, charVal);
 
-               ));
-  return bfill.position();
+	BufferFiller bfill;
+	bfill = ether.tcpOffset();
+	bfill.emit_p(PSTR(
+		"HTTP/1.0 20 OK\r\n"
+		"Content-Type: text/html\r\n"
+		"Pragma: no-cache\r\n"
+		"\r\n"
+		"<title>Temp server</title>"
+		"temperature : $S"
+		), charVal);
+	ether.httpServerReply(bfill.position());
 }
+
+void Ethernet_enc28j60::pageSettings() {
+	BufferFiller bfill;
+	bfill = ether.tcpOffset();
+	bfill.emit_p(PSTR(
+		"HTTP/1.0 200 OK\r\n"
+		"Content-Type: text/html\r\n"
+		"Pragma: no-cache\r\n"
+		"\r\n"
+		"<title>Temp Server settings</title>"
+		"<form action=\"settings.html\">"
+		"First name : <br>"
+		"<input type=\"text\" name=\"firstname\">"
+		"<br>"
+		"Last name : <br>"
+		"<input type=\"text\" name=\"Lastname\">"
+		"<br><br>"
+		"<input type=\"submit\" value=\"submit\">"
+		"</form>"
+
+		));
+	ether.httpServerReply(bfill.position());
+}
+
+
+String Ethernet_enc28j60::receiveData(){
+
+	String request;
+
+	word size = ether.packetReceive();
+	word pos = ether.packetLoop(size);
+	int i;
+
+	if (pos != 0)  // check if valid tcp data is received
+	{
+		i = 0;
+		//copy http header line 1 to request
+		while ((char)Ethernet::buffer[pos + 4 + i] != ' ' && i < 50) {
+			request.concat((char)Ethernet::buffer[pos + 4 + i]);
+			++i;
+		}
+		return request;
+	}
+	else {
+		return "";
+	}
+}
+
+
+
+
+
+
 
 
 /******************************* Debug function *******************************/
 
 
 
-void TestEthernet() {
-  ether.printIp("My IP: ", ether.myip);
-  ether.printIp("Netmask: ", ether.netmask);
-  ether.printIp("GW IP: ", ether.gwip);
-  ether.printIp("DNS IP: ", ether.dnsip);
+void Ethernet_enc28j60::TestEthernet() {
+	ether.printIp("My IP: ", ether.myip);
+	ether.printIp("Netmask: ", ether.netmask);
+	ether.printIp("GW IP: ", ether.gwip);
+	ether.printIp("DNS IP: ", ether.dnsip);
 }
 
-
-// called when the client request is complete?static
-void my_callback(byte status, word off, word len) {
-
-  Serial.println(">>>");
-  Ethernet::buffer[off + 300] = 0;
-  Serial.print((const char*)Ethernet::buffer + off);
-  Serial.println("...");
-}
-
-void Get() {
-  if (!ether.dnsLookup(serveur)) {
-    ether.printIp("SRV: ", ether.hisip);
-    ether.browseUrl(PSTR("/foo/"), "bar", serveur, my_callback);
-  }
-}

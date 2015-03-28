@@ -1,13 +1,14 @@
+Screen::Screen(){
+	u8g = U8GLIB_SSD1306_128X64(U8G_I2C_OPT_NONE);
+	delay(100);
+}
 
-
-
-void InitScreen(){
+void Screen::InitScreen(){
 	u8g.setFont(u8g_font_unifontr);
 	delay(100);
 }
 
-void Draw() {
-
+void Screen::Draw(){
 	// picture loop
 	u8g.firstPage();
 	do {
@@ -21,3 +22,5 @@ void Draw() {
 	} while (u8g.nextPage());
 	delay(10);
 }
+
+

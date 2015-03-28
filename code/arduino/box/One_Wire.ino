@@ -1,7 +1,8 @@
 
 
 float celsius;
-
+OneWire ds(4);
+byte addr[8];
 
 
 void InitOWBus() {
@@ -10,9 +11,9 @@ void InitOWBus() {
 	ds.reset_search();
 	ds.reset();
 	ds.select(addr);
-	if (OneWire::crc8(addr, 7) != addr[7]) {
+	//if (OneWire::crc8(addr, 7) != addr[7]) {
 		//Serial.println("CRC is not valid!");
-	}
+	//}
 }
 
 //you can only wall this function one time per second, even temperature will fail
@@ -33,15 +34,15 @@ void ReadtempAsync() {
 
 
 	celsius = (float)raw / 16.0;
-	message = "  temperature";
-	big = " " + String(celsius) + "C";
-	
+	screen->message = "  temperature";
+	screen->big = " " + String(celsius) + "C";
+
 
 	ds.reset();
 	ds.select(addr);
 	ds.write(0x44, 1);	// start conversion, with parasite power on at the end
 
-	
+
 }
 
 /******************************* Debug function *******************************/
@@ -55,7 +56,7 @@ byte CheckProbeType() {
 		return 1;
 	}	return 0;
 
-	}
+}
 
 
 void PrintOWAddress() {
@@ -67,7 +68,7 @@ void PrintOWAddress() {
 		Serial.write(' ');
 		Serial.print(addr[i], HEX);
 	}
-	}
+}
 
 void OWdataPrinter(byte data[12]) {
 	byte i;
@@ -101,6 +102,6 @@ void ReadtempSync() {
 
 
 	celsius = (float)raw / 16.0;
-	message = "  temperature";
-	big = " " + String(celsius) + "C";
+	screen->message = "  temperature";
+	screen->big = " " + String(celsius) + "C";
 }
