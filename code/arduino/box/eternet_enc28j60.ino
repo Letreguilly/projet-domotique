@@ -1,4 +1,4 @@
-byte Ethernet::buffer[700];
+byte Ethernet::buffer[800];
 
 Ethernet_enc28j60::Ethernet_enc28j60(){
 
@@ -7,7 +7,7 @@ Ethernet_enc28j60::Ethernet_enc28j60(){
 
 
 boolean Ethernet_enc28j60::InitEthernet(byte mymac[6]) {
-	if (ether.begin(700, mymac, 10) == 0) {
+	if (ether.begin(800, mymac, 10) == 0) {
 		return false;
 	}
 	return true;

@@ -6,34 +6,20 @@
 #include <string.h>
 
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+/******************** Screen ************************/
 class Screen
 {
 public:
 	Screen();
-	String message;
-	String big;
-	void InitScreen();
 	void Draw();
+	void Draw(String message, String value);
 private:
 	U8GLIB_SSD1306_128X64 u8g;
-	uint8_t ip[4];
+	String message;
+	String big;
 };
+
+/******************** Ethernet ************************/
 
 class Ethernet_enc28j60
 {
@@ -53,7 +39,7 @@ private:
 	
 };
 
-
+/******************** Mac address ************************/
 class MacAddr
 {
 public:
@@ -64,104 +50,35 @@ private:
 	byte mac[6] = { 8, 21, 177, 0, 0, 0 };
 };
 
+/******************** ds18b20 ************************/
+class OWTemp
+{
+public:
+	OWTemp();
+	float ReadtempAsync();
+private:
 
+};
+
+/******************** Global variable ************************/
 Screen * screen;
 Ethernet_enc28j60 * ethernet;
 MacAddr * mac;
 
+OneWire ds(4);
+byte addr[8];
+OWTemp * OWD;
+float celsius;
+
+/******************** main ************************/
 void setup() {
+	pinMode(8, OUTPUT);
+	digitalWrite(8, HIGH);
+	
 }
 
 
 void loop() {	//loop forever
-
-
-	/* Serial */
-	Serial.begin(9600);
-
-	/* Screen */
-	screen = new Screen();
-	screen->big = "start";
-	screen->InitScreen();
-
-	/* OneWire */
-	InitOWBus();
-
-	/* Mac */
-	mac = new MacAddr();
-	screen->message = mac->MactoString();
-	screen->big = "  MyMac";
-	screen->Draw();
-	delay(3000);
-
-	/* Ethernet */
-	//byte macad[6] = mac->value
-	ethernet = new Ethernet_enc28j60();
-	if (ethernet->InitEthernet(mac->value()) == false) {
-		screen->message = "access eth";
-		screen->big = "failed";
-		screen->Draw();
-		delay(5000);
-	}
-	else if (ethernet->DHCPsetup() == false){
-		screen->message = "dhcp fail";
-		screen->big = " static ";
-		screen->Draw();
-		delay(5000);
-		if (ethernet->Staticsetup() == false){
-			screen->message = "  static eth";
-			screen->big = " failed";
-			screen->Draw();
-			delay(5000);
-		}
-	}
-
-	screen->message = " " + ethernet->GetIp();
-	screen->big = "  MyIp";
-	screen->Draw();
-	delay(3000);
-
-
-	for (;;) {
-
-		String request = ethernet->receiveData();
-		
-		if (request.length() >= 1){
-			pageChooser(request);
-		}
-		ReadtempAsync();
-		screen->Draw();
-	}
+	run();
 }
 
-/**********************Other function**************************/
-
-void pageChooser(String request){
-	//page chooser
-	if (request.indexOf("temperature") == 1) {
-		ethernet->pageTemperature();
-	}
-	else if (request.indexOf("settings") == 1) {
-		ethernet->pageSettings();
-	}
-	else {
-		ethernet->pageNotfound();
-	}
-}
-
-String getUrlParameter(String url, String parameter){
-
-	int  pos = url.indexOf(parameter) + parameter.length() + 1;
-	Serial.println(pos);
-	String value;
-	unsigned int i = 0;
-
-	while (url.charAt(pos) != '?' && url.charAt(pos) != '&' && i < 10){
-		value.concat(url.charAt(pos));
-		pos++;
-		i++;
-	}
-
-
-	return value;
-}

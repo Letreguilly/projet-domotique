@@ -20,6 +20,8 @@
     <None Include="SSD1306.ino" />
     <None Include="eternet_enc28j60.ino" />
     <None Include="mac.ino" />
+    <None Include="run.ino" />
+    <None Include="utils.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visual Micro\.box.vsarduino.h">
